@@ -1,8 +1,14 @@
 import json
+import asyncio
 import httpx
 from typing import Dict, Optional
 
 OLLAMA_BASE_URL = "http://localhost:11434"
+
+# Queue to prevent concurrent Ollama requests (CPU-only = one at a time)
+_request_queue: asyncio.Queue = asyncio.Queue()
+_queue_lock = asyncio.Lock()
+_semaphore = asyncio.Semaphore(1)  # Only 1 Ollama request at a time
 
 
 async def get_available_models() -> list[str]:
@@ -18,39 +24,39 @@ async def get_available_models() -> list[str]:
     return []
 
 
-async def generate_analysis(prompt: str, model: str = "gemma3") -> Optional[Dict]:
-    """Send prompt to Ollama and parse JSON response."""
-    try:
-        async with httpx.AsyncClient(timeout=120.0) as client:
-            response = await client.post(
-                f"{OLLAMA_BASE_URL}/api/generate",
-                json={
-                    "model": model,
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {
-                        "temperature": 0.7,
-                        "num_predict": 2048,
+async def generate_analysis(prompt: str, model: str = "qwen3:8b") -> Optional[Dict]:
+    """Send prompt to Ollama with queue protection (one request at a time)."""
+    async with _semaphore:
+        try:
+            async with httpx.AsyncClient(timeout=300.0) as client:
+                response = await client.post(
+                    f"{OLLAMA_BASE_URL}/api/generate",
+                    json={
+                        "model": model,
+                        "prompt": prompt,
+                        "stream": False,
+                        "options": {
+                            "temperature": 0.7,
+                            "num_predict": 2048,
+                        },
                     },
-                },
-            )
+                )
 
-            if response.status_code != 200:
-                print(f"Ollama error: {response.status_code} - {response.text}")
-                return None
+                if response.status_code != 200:
+                    print(f"Ollama error: {response.status_code} - {response.text}")
+                    return None
 
-            data = response.json()
-            raw_text = data.get("response", "")
+                data = response.json()
+                raw_text = data.get("response", "")
 
-            # Try to extract JSON from response
-            return parse_json_response(raw_text)
+                return parse_json_response(raw_text)
 
-    except httpx.TimeoutException:
-        print("Ollama request timed out")
-        return None
-    except Exception as e:
-        print(f"Ollama error: {e}")
-        return None
+        except httpx.TimeoutException:
+            print("Ollama request timed out (300s)")
+            return None
+        except Exception as e:
+            print(f"Ollama error: {e}")
+            return None
 
 
 def parse_json_response(text: str) -> Optional[Dict]:

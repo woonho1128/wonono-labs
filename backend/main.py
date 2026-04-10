@@ -34,7 +34,7 @@ class AnalysisRequest(BaseModel):
     nickname: str
     age: int
     answers: List[AnswerItem]
-    model: str = "gemma4"
+    model: str = "qwen3:8b"
 
 
 @app.get("/api/models")
@@ -56,7 +56,12 @@ async def analyze(request: AnalysisRequest):
         **scores,
     )
 
-    result = await generate_analysis(prompt, model=request.model)
+    global _active_requests, _waiting_requests
+    _waiting_requests += 1
+    try:
+        result = await generate_analysis(prompt, model=request.model)
+    finally:
+        _waiting_requests = max(0, _waiting_requests - 1)
 
     if result is None:
         raise HTTPException(
@@ -93,9 +98,21 @@ def get_default_value(field: str):
     return defaults.get(field, "")
 
 
+# Track active/waiting requests
+_active_requests = 0
+_waiting_requests = 0
+
 @app.get("/api/health")
 async def health():
     return {"status": "ok"}
+
+@app.get("/api/queue")
+async def queue_status():
+    """Return current queue status."""
+    return {
+        "active": _active_requests,
+        "waiting": _waiting_requests,
+    }
 
 
 # Serve frontend static files (must be AFTER API routes)
