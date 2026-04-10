@@ -1,14 +1,13 @@
 import json
+import re
 import asyncio
 import httpx
 from typing import Dict, Optional
 
 OLLAMA_BASE_URL = "http://localhost:11434"
 
-# Queue to prevent concurrent Ollama requests (CPU-only = one at a time)
-_request_queue: asyncio.Queue = asyncio.Queue()
-_queue_lock = asyncio.Lock()
-_semaphore = asyncio.Semaphore(1)  # Only 1 Ollama request at a time
+# Only 1 Ollama request at a time (CPU-only protection)
+_semaphore = asyncio.Semaphore(1)
 
 
 async def get_available_models() -> list[str]:
@@ -26,6 +25,9 @@ async def get_available_models() -> list[str]:
 
 async def generate_analysis(prompt: str, model: str = "qwen3:8b") -> Optional[Dict]:
     """Send prompt to Ollama with queue protection (one request at a time)."""
+    # Add /nothink to prompt for qwen3 to disable thinking mode
+    final_prompt = prompt + "\n\n/nothink"
+
     async with _semaphore:
         try:
             async with httpx.AsyncClient(timeout=300.0) as client:
@@ -33,7 +35,7 @@ async def generate_analysis(prompt: str, model: str = "qwen3:8b") -> Optional[Di
                     f"{OLLAMA_BASE_URL}/api/generate",
                     json={
                         "model": model,
-                        "prompt": prompt,
+                        "prompt": final_prompt,
                         "stream": False,
                         "options": {
                             "temperature": 0.7,
@@ -48,8 +50,15 @@ async def generate_analysis(prompt: str, model: str = "qwen3:8b") -> Optional[Di
 
                 data = response.json()
                 raw_text = data.get("response", "")
+                print(f"[Ollama raw response length: {len(raw_text)} chars]")
 
-                return parse_json_response(raw_text)
+                # Strip <think>...</think> tags if present (qwen3 thinking mode)
+                raw_text = strip_thinking_tags(raw_text)
+
+                result = parse_json_response(raw_text)
+                if result is None:
+                    print(f"[JSON parse failed] Raw text preview: {raw_text[:500]}")
+                return result
 
         except httpx.TimeoutException:
             print("Ollama request timed out (300s)")
@@ -57,6 +66,15 @@ async def generate_analysis(prompt: str, model: str = "qwen3:8b") -> Optional[Di
         except Exception as e:
             print(f"Ollama error: {e}")
             return None
+
+
+def strip_thinking_tags(text: str) -> str:
+    """Remove <think>...</think> blocks from qwen3 responses."""
+    # Remove <think>...</think> including content
+    text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL)
+    # Also remove unclosed <think> tags
+    text = re.sub(r'<think>.*$', '', text, flags=re.DOTALL)
+    return text.strip()
 
 
 def parse_json_response(text: str) -> Optional[Dict]:
@@ -71,16 +89,17 @@ def parse_json_response(text: str) -> Optional[Dict]:
     for marker in ["```json", "```"]:
         if marker in text:
             start = text.index(marker) + len(marker)
-            end = text.index("```", start) if "```" in text[start:] else len(text)
-            try:
-                return json.loads(text[start:end].strip())
-            except json.JSONDecodeError:
-                pass
+            end_pos = text.find("```", start)
+            if end_pos != -1:
+                try:
+                    return json.loads(text[start:end_pos].strip())
+                except json.JSONDecodeError:
+                    pass
 
     # Try to find JSON object in text
     brace_start = text.find("{")
     brace_end = text.rfind("}")
-    if brace_start != -1 and brace_end != -1:
+    if brace_start != -1 and brace_end != -1 and brace_end > brace_start:
         try:
             return json.loads(text[brace_start:brace_end + 1])
         except json.JSONDecodeError:
