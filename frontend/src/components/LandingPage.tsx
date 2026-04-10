@@ -19,14 +19,16 @@ export default function LandingPage({ onStart }: Props) {
         className="text-center z-10 w-full max-w-md mx-auto"
       >
         {/* Logo */}
+        <div className="flex justify-center mb-6">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shadow-lg shadow-purple-500/30"
+          className="w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shadow-lg shadow-purple-500/30"
         >
           <span className="text-3xl">&#x1F9E0;</span>
         </motion.div>
+        </div>
 
         <motion.p
           initial={{ opacity: 0 }}

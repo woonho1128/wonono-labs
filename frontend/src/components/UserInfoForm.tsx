@@ -39,8 +39,10 @@ export default function UserInfoForm({ onSubmit, onBack }: Props) {
         </button>
 
         <div className="rounded-2xl p-6 bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20">
-          <div className="w-14 h-14 mx-auto mb-5 rounded-xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
+          <div className="flex justify-center mb-5">
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
             <span className="text-xl">&#x270D;&#xFE0F;</span>
+          </div>
           </div>
 
           <h2 className="text-xl font-bold text-center text-white mb-1">&#xAE30;&#xBCF8; &#xC815;&#xBCF4; &#xC785;&#xB825;</h2>
