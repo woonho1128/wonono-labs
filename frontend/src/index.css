@@ -1,0 +1,102 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Pretendard Variable', 'Inter', system-ui, -apple-system, sans-serif;
+  --color-primary: #6c63ff;
+  --color-primary-light: #8b83ff;
+  --color-secondary: #3b82f6;
+  --color-dark: #0a0a1a;
+  --color-dark-card: #12122a;
+  --color-dark-border: #1e1e3f;
+  --color-accent-pink: #ec4899;
+  --color-accent-cyan: #22d3ee;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Pretendard Variable', 'Inter', system-ui, sans-serif;
+  background: #0a0a1a;
+  color: #ffffff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.bg-gradient-main {
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a1040 50%, #0a0a1a 100%);
+}
+
+.bg-gradient-card {
+  background: linear-gradient(145deg, rgba(108, 99, 255, 0.1), rgba(59, 130, 246, 0.05));
+  border: 1px solid rgba(108, 99, 255, 0.2);
+}
+
+.bg-gradient-button {
+  background: linear-gradient(135deg, #6c63ff 0%, #3b82f6 100%);
+}
+
+.bg-gradient-button:hover {
+  background: linear-gradient(135deg, #8b83ff 0%, #60a5fa 100%);
+}
+
+.glow-text {
+  text-shadow: 0 0 40px rgba(108, 99, 255, 0.5), 0 0 80px rgba(108, 99, 255, 0.2);
+}
+
+.glow-box {
+  box-shadow: 0 0 30px rgba(108, 99, 255, 0.15), 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.score-btn {
+  transition: all 0.2s ease;
+}
+
+.score-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(108, 99, 255, 0.4);
+}
+
+.score-btn.active {
+  background: linear-gradient(135deg, #6c63ff, #3b82f6) !important;
+  transform: scale(1.15);
+  box-shadow: 0 0 25px rgba(108, 99, 255, 0.5);
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, #6c63ff, #3b82f6, #22d3ee);
+  background-size: 200% 100%;
+  animation: gradient-shift 2s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.5s ease-out infinite;
+}
