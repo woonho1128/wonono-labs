@@ -23,7 +23,7 @@ async def get_available_models() -> list[str]:
     return []
 
 
-async def generate_analysis(prompt: str, model: str = "qwen3:8b") -> Optional[Dict]:
+async def generate_analysis(prompt: str, model: str = "qwen3:4b") -> Optional[Dict]:
     """Send prompt to Ollama with queue protection (one request at a time)."""
     # Add /nothink to prompt for qwen3 to disable thinking mode
     final_prompt = prompt + "\n\n/nothink"
