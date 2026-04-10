@@ -21,7 +21,7 @@ export default function UserInfoForm({ onSubmit, onBack }: Props) {
   const isValid = nickname.trim().length > 0 && parseInt(age) > 0;
 
   return (
-    <div className="min-h-screen bg-gradient-main flex flex-col items-center justify-center px-4 relative">
+    <div className="min-h-screen bg-gradient-main flex items-center justify-center px-4 relative">
       <div className="absolute top-20 right-20 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl" />
       <div className="absolute bottom-20 left-20 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl" />
 
@@ -29,48 +29,48 @@ export default function UserInfoForm({ onSubmit, onBack }: Props) {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-md z-10"
+        className="w-full max-w-sm mx-auto z-10"
       >
         <button
           onClick={onBack}
-          className="text-gray-500 hover:text-gray-300 mb-6 flex items-center gap-2 transition-colors cursor-pointer"
+          className="text-gray-500 hover:text-gray-300 mb-4 flex items-center gap-2 transition-colors cursor-pointer text-sm"
         >
-          <span>&#x2190;</span> 뒤로가기
+          &#x2190; &#xB4A4;&#xB85C;&#xAC00;&#xAE30;
         </button>
 
-        <div className="bg-gradient-card rounded-3xl p-8 glow-box">
-          <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-button flex items-center justify-center">
-            <span className="text-2xl">&#x270D;&#xFE0F;</span>
+        <div className="rounded-2xl p-6 bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20">
+          <div className="w-14 h-14 mx-auto mb-5 rounded-xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
+            <span className="text-xl">&#x270D;&#xFE0F;</span>
           </div>
 
-          <h2 className="text-2xl font-bold text-center mb-2">기본 정보 입력</h2>
-          <p className="text-gray-400 text-center mb-8">분석을 위해 간단한 정보를 입력해주세요</p>
+          <h2 className="text-xl font-bold text-center text-white mb-1">&#xAE30;&#xBCF8; &#xC815;&#xBCF4; &#xC785;&#xB825;</h2>
+          <p className="text-gray-400 text-center mb-6 text-sm">&#xBD84;&#xC11D;&#xC744; &#xC704;&#xD574; &#xAC04;&#xB2E8;&#xD55C; &#xC815;&#xBCF4;&#xB97C; &#xC785;&#xB825;&#xD574;&#xC8FC;&#xC138;&#xC694;</p>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">닉네임</label>
+              <label className="block text-xs font-medium text-gray-400 mb-1.5">&#xB2C9;&#xB124;&#xC784;</label>
               <input
                 type="text"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
-                placeholder="닉네임을 입력하세요"
+                placeholder="&#xB2C9;&#xB124;&#xC784;&#xC744; &#xC785;&#xB825;&#xD558;&#xC138;&#xC694;"
                 maxLength={20}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500
-                           focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[#0d0d20] border border-purple-500/20 text-white placeholder-gray-600
+                           text-sm focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400/50 transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">나이</label>
+              <label className="block text-xs font-medium text-gray-400 mb-1.5">&#xB098;&#xC774;</label>
               <input
                 type="number"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
-                placeholder="나이를 입력하세요"
+                placeholder="&#xB098;&#xC774;&#xB97C; &#xC785;&#xB825;&#xD558;&#xC138;&#xC694;"
                 min={1}
                 max={100}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500
-                           focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[#0d0d20] border border-purple-500/20 text-white placeholder-gray-600
+                           text-sm focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400/50 transition-all"
               />
             </div>
 
@@ -79,13 +79,13 @@ export default function UserInfoForm({ onSubmit, onBack }: Props) {
               disabled={!isValid}
               whileHover={isValid ? { scale: 1.02 } : {}}
               whileTap={isValid ? { scale: 0.98 } : {}}
-              className={`w-full py-4 rounded-xl font-semibold text-lg transition-all cursor-pointer
+              className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-all cursor-pointer mt-2
                 ${isValid
-                  ? 'bg-gradient-button text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40'
-                  : 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                  ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40'
+                  : 'bg-gray-800 text-gray-500 cursor-not-allowed'
                 }`}
             >
-              테스트 시작 &#x2192;
+              &#xD14C;&#xC2A4;&#xD2B8; &#xC2DC;&#xC791; &#x2192;
             </motion.button>
           </form>
         </div>

@@ -16,10 +16,10 @@ const fadeInUp = {
 
 export default function ResultReport({ result, userInfo, onRestart }: Props) {
   return (
-    <div className="min-h-screen bg-gradient-main px-4 py-12 relative">
+    <div className="min-h-screen bg-gradient-main px-4 py-12 relative flex flex-col items-center">
       <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-purple-900/20 to-transparent" />
 
-      <div className="max-w-lg mx-auto z-10 relative">
+      <div className="w-full max-w-md mx-auto z-10 relative">
         {/* Header */}
         <motion.div {...fadeInUp} transition={{ delay: 0.1 }} className="text-center mb-10">
           <p className="text-purple-400 text-sm font-medium tracking-widest uppercase mb-2">Analysis Complete</p>
@@ -33,7 +33,7 @@ export default function ResultReport({ result, userInfo, onRestart }: Props) {
         <motion.div
           {...fadeInUp}
           transition={{ delay: 0.2 }}
-          className="bg-gradient-card rounded-3xl p-8 mb-6 glow-box text-center"
+          className="rounded-2xl bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-8 mb-6 glow-box text-center"
         >
           <div className="text-6xl mb-4">{result.type_emoji}</div>
           <div className="inline-block px-4 py-1 rounded-full bg-purple-500/20 text-purple-300 text-sm font-medium mb-3">
@@ -47,7 +47,7 @@ export default function ResultReport({ result, userInfo, onRestart }: Props) {
         <motion.div
           {...fadeInUp}
           transition={{ delay: 0.3 }}
-          className="bg-gradient-card rounded-3xl p-6 mb-6 glow-box"
+          className="rounded-2xl bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-6 mb-6 glow-box"
         >
           <h3 className="text-lg font-bold mb-4 text-center">&#x1F4CA; 심리 프로필</h3>
           <PersonalityChart scores={result.scores} />
@@ -57,7 +57,7 @@ export default function ResultReport({ result, userInfo, onRestart }: Props) {
         <motion.div
           {...fadeInUp}
           transition={{ delay: 0.4 }}
-          className="bg-gradient-card rounded-3xl p-6 mb-6 glow-box"
+          className="rounded-2xl bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-6 mb-6 glow-box"
         >
           <h3 className="text-lg font-bold mb-5">&#x1F3AF; 차원별 상세</h3>
           <div className="space-y-4">
@@ -86,7 +86,7 @@ export default function ResultReport({ result, userInfo, onRestart }: Props) {
           transition={{ delay: 0.5 }}
           className="grid grid-cols-2 gap-4 mb-6"
         >
-          <div className="bg-gradient-card rounded-2xl p-5 glow-box">
+          <div className="rounded-2xl bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-5 glow-box">
             <h3 className="text-base font-bold mb-3 text-green-400">&#x2728; 강점</h3>
             <ul className="space-y-2">
               {result.strengths.map((s, i) => (
@@ -97,7 +97,7 @@ export default function ResultReport({ result, userInfo, onRestart }: Props) {
               ))}
             </ul>
           </div>
-          <div className="bg-gradient-card rounded-2xl p-5 glow-box">
+          <div className="rounded-2xl bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-5 glow-box">
             <h3 className="text-base font-bold mb-3 text-orange-400">&#x26A0; 약점</h3>
             <ul className="space-y-2">
               {result.weaknesses.map((w, i) => (
@@ -114,7 +114,7 @@ export default function ResultReport({ result, userInfo, onRestart }: Props) {
         <motion.div
           {...fadeInUp}
           transition={{ delay: 0.6 }}
-          className="bg-gradient-card rounded-3xl p-6 mb-6 glow-box"
+          className="rounded-2xl bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-6 mb-6 glow-box"
         >
           <h3 className="text-lg font-bold mb-3">&#x1F495; 연애 스타일</h3>
           <p className="text-gray-300 leading-relaxed">{result.dating_style}</p>
@@ -124,7 +124,7 @@ export default function ResultReport({ result, userInfo, onRestart }: Props) {
         <motion.div
           {...fadeInUp}
           transition={{ delay: 0.7 }}
-          className="bg-gradient-card rounded-3xl p-6 mb-6 glow-box"
+          className="rounded-2xl bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-6 mb-6 glow-box"
         >
           <h3 className="text-lg font-bold mb-3">&#x1F49C; 이상형 분석</h3>
           <p className="text-gray-300 leading-relaxed">{result.ideal_type}</p>
@@ -134,7 +134,7 @@ export default function ResultReport({ result, userInfo, onRestart }: Props) {
         <motion.div
           {...fadeInUp}
           transition={{ delay: 0.8 }}
-          className="bg-gradient-card rounded-3xl p-6 mb-8 glow-box border-purple-500/30"
+          className="rounded-2xl bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-6 mb-8 glow-box border-purple-500/30"
         >
           <h3 className="text-lg font-bold mb-3">&#x1F4AC; AI 조언</h3>
           <p className="text-gray-300 leading-relaxed italic">{result.advice}</p>
