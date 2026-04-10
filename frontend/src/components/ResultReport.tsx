@@ -148,16 +148,27 @@ export default function ResultReport({ result, userInfo, onRestart }: Props) {
         >
           <button
             onClick={() => {
+              const shareText = `나의 심리 유형: ${result.personality_type} ${result.type_emoji}\n${window.location.href}`;
               if (navigator.share) {
                 navigator.share({
                   title: `${userInfo.nickname}님의 심리 분석 결과`,
-                  text: `나의 심리 유형: ${result.personality_type} ${result.type_emoji}`,
+                  text: shareText,
                   url: window.location.href,
+                }).catch(() => {});
+              } else if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(shareText).then(() => {
+                  alert('결과가 클립보드에 복사되었습니다!');
                 });
               } else {
-                navigator.clipboard.writeText(
-                  `나의 심리 유형: ${result.personality_type} ${result.type_emoji}\n${window.location.href}`
-                );
+                // HTTP fallback
+                const ta = document.createElement('textarea');
+                ta.value = shareText;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
                 alert('결과가 클립보드에 복사되었습니다!');
               }
             }}
