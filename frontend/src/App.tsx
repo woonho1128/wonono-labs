@@ -30,7 +30,7 @@ function App() {
           nickname: userInfo.nickname,
           age: userInfo.age,
           answers,
-          model: 'qwen3:4b',
+          model: 'qwen3:14b',
         }),
       });
 

@@ -34,7 +34,7 @@ class AnalysisRequest(BaseModel):
     nickname: str
     age: int
     answers: List[AnswerItem]
-    model: str = "qwen3:4b"
+    model: str = "qwen3:14b"
 
 
 @app.get("/api/models")

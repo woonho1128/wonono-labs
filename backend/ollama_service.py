@@ -4,7 +4,12 @@ import asyncio
 import httpx
 from typing import Dict, Optional
 
-OLLAMA_BASE_URL = "http://localhost:11434"
+import os
+# Use ngrok tunnel to local PC's Ollama, fallback to localhost
+OLLAMA_BASE_URL = os.environ.get(
+    "OLLAMA_URL",
+    "https://hyperconscientious-christal-unconvent.ngrok-free.app"
+)
 
 # Only 1 Ollama request at a time (CPU-only protection)
 _semaphore = asyncio.Semaphore(1)
@@ -23,7 +28,7 @@ async def get_available_models() -> list[str]:
     return []
 
 
-async def generate_analysis(prompt: str, model: str = "qwen3:4b") -> Optional[Dict]:
+async def generate_analysis(prompt: str, model: str = "qwen3:14b") -> Optional[Dict]:
     """Send prompt to Ollama with queue protection (one request at a time)."""
     # Add /nothink to prompt for qwen3 to disable thinking mode
     final_prompt = prompt + "\n\n/nothink"
