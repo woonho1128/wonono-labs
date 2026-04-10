@@ -138,6 +138,12 @@ function generateFallbackResult(answers: Answer[]): AnalysisResult {
     strengths: getStrengths(topDim),
     weaknesses: getWeaknesses(topDim),
     advice: `${type.name} 유형으로서 당신의 장점을 살리면서, 가끔은 다른 관점에서도 상황을 바라보는 연습을 해보세요. 대인관계에서 더욱 풍요로운 경험을 할 수 있을 것입니다.`,
+    compatible_type: '당신과 잘 맞는 유형은 따뜻하고 안정적인 성격의 사람입니다. 서로의 장점을 보완하며 조화로운 관계를 만들어갈 수 있습니다.',
+    incompatible_type: '지나치게 독단적이거나 감정 기복이 심한 사람과는 갈등이 생길 수 있습니다. 소통 방식의 차이를 이해하는 것이 중요합니다.',
+    quote: '"자신을 아는 것이 모든 지혜의 시작이다" - 아리스토텔레스',
+    stress_behavior: '스트레스를 받으면 혼자만의 시간을 갖거나 익숙한 활동에 몰입하는 경향이 있습니다. 가까운 사람과 대화하거나 산책 등 가벼운 활동이 도움이 됩니다.',
+    suitable_jobs: ['상담사', '연구원', '작가', '디자이너'],
+    growth_point: '새로운 환경이나 사람들에게 먼저 다가가는 연습을 해보세요. 작은 도전들이 쌓여 큰 성장으로 이어질 수 있습니다.',
   };
 }
 

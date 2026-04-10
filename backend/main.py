@@ -75,6 +75,8 @@ async def analyze(request: AnalysisRequest):
         "personality_type", "type_code", "type_emoji",
         "personality_description", "dating_style", "ideal_type",
         "strengths", "weaknesses", "advice",
+        "compatible_type", "incompatible_type", "quote",
+        "stress_behavior", "suitable_jobs", "growth_point",
     ]
     for field in required_fields:
         if field not in result:
@@ -94,6 +96,12 @@ def get_default_value(field: str):
         "strengths": ["분석 중"],
         "weaknesses": ["분석 중"],
         "advice": "다시 시도해주세요.",
+        "compatible_type": "분석 결과를 생성하지 못했습니다.",
+        "incompatible_type": "분석 결과를 생성하지 못했습니다.",
+        "quote": "분석 결과를 생성하지 못했습니다.",
+        "stress_behavior": "분석 결과를 생성하지 못했습니다.",
+        "suitable_jobs": ["분석 중"],
+        "growth_point": "분석 결과를 생성하지 못했습니다.",
     }
     return defaults.get(field, "")
 

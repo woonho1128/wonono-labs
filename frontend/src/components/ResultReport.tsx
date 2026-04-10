@@ -130,13 +130,75 @@ export default function ResultReport({ result, userInfo, onRestart }: Props) {
           <p className="text-gray-300 leading-relaxed">{result.ideal_type}</p>
         </motion.div>
 
-        {/* Advice */}
+        {/* Compatible / Incompatible Types */}
         <motion.div
           {...fadeInUp}
           transition={{ delay: 0.8 }}
-          className="rounded-2xl bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-6 mb-8 glow-box border-purple-500/30"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"
         >
-          <h3 className="text-lg font-bold mb-3">&#x1F4AC; AI 조언</h3>
+          <div className="rounded-2xl bg-[#161630]/80 border border-green-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-5">
+            <h3 className="text-base font-bold mb-2 text-green-400">&#x1F91D; &#xC798; &#xB9DE;&#xB294; &#xC720;&#xD615;</h3>
+            <p className="text-gray-300 text-sm leading-relaxed">{result.compatible_type}</p>
+          </div>
+          <div className="rounded-2xl bg-[#161630]/80 border border-red-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-5">
+            <h3 className="text-base font-bold mb-2 text-red-400">&#x26A1; &#xCDA9;&#xB3CC;&#xD558;&#xB294; &#xC720;&#xD615;</h3>
+            <p className="text-gray-300 text-sm leading-relaxed">{result.incompatible_type}</p>
+          </div>
+        </motion.div>
+
+        {/* Quote */}
+        <motion.div
+          {...fadeInUp}
+          transition={{ delay: 0.85 }}
+          className="rounded-2xl bg-[#161630]/80 border border-yellow-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-6 mb-6 text-center"
+        >
+          <span className="text-3xl mb-3 block">&#x2728;</span>
+          <p className="text-gray-200 text-base md:text-lg leading-relaxed italic">{result.quote}</p>
+        </motion.div>
+
+        {/* Stress Behavior */}
+        <motion.div
+          {...fadeInUp}
+          transition={{ delay: 0.9 }}
+          className="rounded-2xl bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-6 mb-6"
+        >
+          <h3 className="text-lg font-bold mb-3">&#x1F62E;&#x200D;&#x1F4A8; &#xC2A4;&#xD2B8;&#xB808;&#xC2A4; &#xBC18;&#xC751;</h3>
+          <p className="text-gray-300 leading-relaxed">{result.stress_behavior}</p>
+        </motion.div>
+
+        {/* Suitable Jobs */}
+        <motion.div
+          {...fadeInUp}
+          transition={{ delay: 0.95 }}
+          className="rounded-2xl bg-[#161630]/80 border border-purple-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-6 mb-6"
+        >
+          <h3 className="text-lg font-bold mb-4">&#x1F4BC; &#xC801;&#xD569;&#xD55C; &#xC9C1;&#xC5C5;</h3>
+          <div className="flex flex-wrap gap-2">
+            {result.suitable_jobs?.map((job, i) => (
+              <span key={i} className="px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-sm font-medium">
+                {job}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Growth Point */}
+        <motion.div
+          {...fadeInUp}
+          transition={{ delay: 1.0 }}
+          className="rounded-2xl bg-[#161630]/80 border border-cyan-500/15 backdrop-blur-sm shadow-xl shadow-black/20 p-6 mb-6"
+        >
+          <h3 className="text-lg font-bold mb-3">&#x1F331; &#xC131;&#xC7A5; &#xD3EC;&#xC778;&#xD2B8;</h3>
+          <p className="text-gray-300 leading-relaxed">{result.growth_point}</p>
+        </motion.div>
+
+        {/* Advice */}
+        <motion.div
+          {...fadeInUp}
+          transition={{ delay: 1.05 }}
+          className="rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 backdrop-blur-sm shadow-xl shadow-black/20 p-6 mb-8"
+        >
+          <h3 className="text-lg font-bold mb-3">&#x1F4AC; AI &#xC870;&#xC5B8;</h3>
           <p className="text-gray-300 leading-relaxed italic">{result.advice}</p>
         </motion.div>
 

@@ -46,6 +46,12 @@ export interface AnalysisResult {
   strengths: string[];
   weaknesses: string[];
   advice: string;
+  compatible_type: string;
+  incompatible_type: string;
+  quote: string;
+  stress_behavior: string;
+  suitable_jobs: string[];
+  growth_point: string;
 }
 
 export interface AnalysisRequest {
