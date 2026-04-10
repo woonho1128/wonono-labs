@@ -18,7 +18,8 @@ _semaphore = asyncio.Semaphore(1)
 async def get_available_models() -> list[str]:
     """Fetch list of available models from Ollama."""
     try:
-        async with httpx.AsyncClient(timeout=10.0) as client:
+        headers = {"ngrok-skip-browser-warning": "true"}
+        async with httpx.AsyncClient(timeout=10.0, headers=headers) as client:
             response = await client.get(f"{OLLAMA_BASE_URL}/api/tags")
             if response.status_code == 200:
                 data = response.json()
@@ -35,7 +36,8 @@ async def generate_analysis(prompt: str, model: str = "qwen3:14b") -> Optional[D
 
     async with _semaphore:
         try:
-            async with httpx.AsyncClient(timeout=300.0) as client:
+            headers = {"ngrok-skip-browser-warning": "true"}
+            async with httpx.AsyncClient(timeout=300.0, headers=headers) as client:
                 response = await client.post(
                     f"{OLLAMA_BASE_URL}/api/generate",
                     json={
